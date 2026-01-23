@@ -11,139 +11,168 @@ const Hero: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`Thank you ${formData.name}! Redirecting to checkout for ${formData.quantity} pack(s) of ${formData.miswakType} miswak...`);
+    alert(`Thank you ${formData.name}! Redirecting to checkout...`);
   };
 
   return (
-    <section className="relative pt-8 pb-16 lg:pt-20 lg:pb-32 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
-          
-          {/* Content Left */}
-          <div className="w-full lg:flex-1 text-center lg:text-left z-10 hero-content">
-            <div className="hero-badge gsap-reveal opacity-0 inline-flex items-center space-x-2 bg-primary/5 px-4 py-2 rounded-full mb-6 border border-primary/10">
-              <span className="flex h-2 w-2 rounded-full bg-cta animate-pulse"></span>
-              <span className="text-primary text-xs md:text-sm font-semibold uppercase tracking-wider">Premium Miswak Brushes</span>
-            </div>
-            <h1 className="hero-title gsap-reveal opacity-0 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-playfair font-bold text-primary leading-tight mb-6">
-              Revive the Sunnah. <br className="hidden sm:block" />
-              <span className="text-cta">Protect Your Smile Naturally.</span>
-            </h1>
-            <p className="hero-description gsap-reveal opacity-0 text-base md:text-lg lg:text-xl text-primary/80 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Miswak-powered toothbrush for healthier teeth & a cleaner planet. Join thousands of families choosing faith-driven hygiene.
-            </p>
+    <section className="relative pt-12 pb-20 lg:pt-24 lg:pb-40 overflow-hidden bg-secondary">
+      {/* Background Ornaments */}
+      <div className="absolute top-0 right-0 -z-0 w-[60%] h-full bg-primary/[0.02] rounded-l-[200px] hidden lg:block transform translate-x-20"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0 w-full h-full pointer-events-none opacity-40">
+        <div className="absolute top-[10%] right-[10%] w-96 h-96 bg-cta/10 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-[10%] left-[5%] w-80 h-80 bg-accent/5 rounded-full blur-[100px]"></div>
+      </div>
 
-            {/* Product Image Highlight */}
-            <div className="hero-image-box gsap-reveal opacity-0 relative mb-12 lg:mb-0 group max-w-sm sm:max-w-md mx-auto lg:mx-0 px-4">
-               <div className="absolute inset-0 bg-cta/5 rounded-full blur-[60px] md:blur-[80px] group-hover:bg-cta/10 transition-colors"></div>
-               <img 
-                src="https://images.unsplash.com/photo-1559591937-e43590f0ca1d?auto=format&fit=crop&q=80&w=800" 
-                alt="Sunnah Smile Premium Brush" 
-                className="relative z-10 w-full aspect-[4/3] sm:aspect-auto sm:h-64 object-cover rounded-[2rem] md:rounded-[3rem] shadow-2xl border-4 border-white transform -rotate-2 sm:-rotate-3 group-hover:rotate-0 transition-transform duration-500"
-               />
-               <div className="absolute -bottom-4 -right-2 sm:-bottom-6 sm:-right-6 bg-accent text-white p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-xl z-20 transform rotate-3 sm:rotate-6">
-                 <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wider">100% Organic</p>
-                 <p className="text-sm sm:text-lg font-playfair">Miswak Fiber</p>
-               </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="flex flex-col lg:flex-row items-start gap-12 lg:gap-20">
+          
+          {/* Text Content Area */}
+          <div className="w-full lg:flex-1 text-center lg:text-left">
+            {/* Social Proof Badge */}
+            <div className="hero-badge opacity-0 translate-y-8 inline-flex items-center space-x-3 bg-white px-4 py-2 rounded-full mb-8 shadow-sm border border-primary/5">
+              <div className="flex -space-x-2">
+                {[1, 2, 3].map(i => (
+                  <div key={i} className="w-6 h-6 rounded-full border-2 border-white bg-cta/20 overflow-hidden">
+                    <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="User" />
+                  </div>
+                ))}
+              </div>
+              <span className="text-[10px] sm:text-xs font-bold text-primary/60 uppercase tracking-widest">
+                Trusted by <span className="text-primary">12,000+</span> Families
+              </span>
             </div>
             
-            <div className="hero-features flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4 mb-10 mt-10 md:mt-12">
+            <h1 className="hero-title opacity-0 translate-y-8 text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-playfair font-bold text-primary leading-[1.05] tracking-tight mb-8">
+              The Purest <br className="hidden lg:block" />
+              <span className="text-cta italic font-normal">Sunnah</span> Smile.
+            </h1>
+            
+            <p className="hero-description opacity-0 translate-y-8 text-lg md:text-xl text-primary/60 mb-12 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium">
+              Ancient Miswak wisdom meets modern hygiene. Our clinically-proven, eco-friendly brushes bring the Prophetic tradition into your daily routine.
+            </p>
+
+            {/* Feature Tags Grid */}
+            <div className="grid grid-cols-2 sm:flex sm:flex-wrap justify-center lg:justify-start gap-3 sm:gap-4 mb-12">
               {[
-                { icon: 'fa-moon', color: 'text-accent', label: 'Sunnah-based' },
-                { icon: 'fa-leaf', color: 'text-cta', label: 'Eco-friendly' },
-                { icon: 'fa-truck-fast', color: 'text-primary', label: 'COD Available' }
+                { icon: 'fa-moon', label: '100% Sunnah', color: 'accent' },
+                { icon: 'fa-vial', label: 'Antibacterial', color: 'cta' },
+                { icon: 'fa-leaf', label: 'Eco-Friendly', color: 'primary' },
+                { icon: 'fa-shield-heart', label: 'Gum Safe', color: 'accent' }
               ].map((f, i) => (
-                <div key={i} className="hero-feature-tag gsap-reveal opacity-0 flex items-center space-x-2 bg-white px-3 sm:px-4 py-2 rounded-lg shadow-sm border border-primary/10 hover:border-cta transition-colors cursor-default whitespace-nowrap">
-                  <i className={`fa-solid ${f.icon} ${f.color} text-sm`}></i>
-                  <span className="text-xs sm:text-sm font-semibold">{f.label}</span>
+                <div key={i} className="hero-feature-tag opacity-0 translate-y-8 flex items-center space-x-2.5 bg-white/80 backdrop-blur-md px-4 py-3 rounded-2xl shadow-sm border border-primary/5 hover:border-cta/20 transition-all cursor-default">
+                  <div className={`w-8 h-8 rounded-lg bg-${f.color}/10 flex items-center justify-center`}>
+                    <i className={`fa-solid ${f.icon} text-${f.color} text-xs`}></i>
+                  </div>
+                  <span className="text-xs font-extrabold text-primary/80 whitespace-nowrap">{f.label}</span>
                 </div>
               ))}
             </div>
+
+            {/* Client Logos / Trust Section */}
+            <div className="pt-8 border-t border-primary/5 hidden sm:block">
+               <p className="text-[10px] font-bold text-primary/30 uppercase tracking-[0.2em] mb-6">As Featured & Recommended by</p>
+               <div className="flex items-center justify-center lg:justify-start space-x-8 opacity-40 grayscale group-hover:grayscale-0 transition-all">
+                  <span className="font-playfair font-bold text-xl">MuslimHealth</span>
+                  <span className="font-bold text-lg">EcoDental</span>
+                  <span className="font-playfair italic text-xl">TheSunnahWay</span>
+               </div>
+            </div>
           </div>
 
-          {/* POS Form Right */}
-          <div className="w-full lg:w-[400px] xl:w-[420px] z-10 hero-form-container gsap-reveal opacity-0">
-            <div className="bg-white rounded-[1.5rem] md:rounded-[2rem] shadow-2xl p-6 sm:p-8 border border-primary/5 relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-1.5 bg-cta"></div>
-              <h3 className="text-xl md:text-2xl font-bold text-primary mb-6 text-center">Quick Order Form</h3>
+          {/* Right Section: Form + Visual Layer */}
+          <div className="w-full lg:w-[450px] relative">
+            {/* Order Card */}
+            <div className="hero-form-container opacity-0 translate-x-12 relative z-20 bg-white rounded-[2.5rem] shadow-2xl p-8 sm:p-10 border border-primary/5">
+              <div className="absolute top-0 right-10 w-20 h-1.5 bg-cta rounded-b-full"></div>
+              
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold text-primary mb-2">Reserve Yours</h3>
+                <p className="text-sm text-primary/40 font-medium">Fast checkout with Cash on Delivery</p>
+              </div>
+
               <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-[10px] font-bold text-primary/50 uppercase tracking-widest mb-1.5 ml-1">Full Name</label>
+                <div className="group">
                   <input 
                     type="text" 
                     required
-                    placeholder="e.g. Abdullah Ahmed"
-                    className="w-full px-4 md:px-5 py-3 md:py-3.5 rounded-xl md:rounded-2xl bg-[#F9F7F2] border border-primary/10 text-primary placeholder:text-primary/30 focus:bg-white focus:ring-4 focus:ring-cta/10 focus:border-cta outline-none transition-all duration-200 text-sm md:text-base"
+                    placeholder="Full Name"
+                    className="w-full px-6 py-4 rounded-2xl bg-secondary border border-primary/5 text-primary placeholder:text-primary/30 focus:bg-white focus:ring-4 focus:ring-cta/5 focus:border-cta/30 outline-none transition-all duration-300 font-semibold"
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
                   />
                 </div>
-                <div>
-                  <label className="block text-[10px] font-bold text-primary/50 uppercase tracking-widest mb-1.5 ml-1">Email or Phone</label>
+                <div className="group">
                   <input 
                     type="text" 
                     required
-                    placeholder="For order tracking"
-                    className="w-full px-4 md:px-5 py-3 md:py-3.5 rounded-xl md:rounded-2xl bg-[#F9F7F2] border border-primary/10 text-primary placeholder:text-primary/30 focus:bg-white focus:ring-4 focus:ring-cta/10 focus:border-cta outline-none transition-all duration-200 text-sm md:text-base"
+                    placeholder="Email or WhatsApp Number"
+                    className="w-full px-6 py-4 rounded-2xl bg-secondary border border-primary/5 text-primary placeholder:text-primary/30 focus:bg-white focus:ring-4 focus:ring-cta/5 focus:border-cta/30 outline-none transition-all duration-300 font-semibold"
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
                   />
                 </div>
-                <div>
-                  <label className="block text-[10px] font-bold text-primary/50 uppercase tracking-widest mb-1.5 ml-1">Miswak Source</label>
-                  <div className="relative">
-                    <select 
-                      className="w-full px-4 md:px-5 py-3 md:py-3.5 rounded-xl md:rounded-2xl bg-[#F9F7F2] border border-primary/10 text-primary focus:bg-white focus:ring-4 focus:ring-cta/10 focus:border-cta outline-none transition-all duration-200 appearance-none cursor-pointer text-sm md:text-base"
-                      value={formData.miswakType}
-                      onChange={(e) => setFormData({...formData, miswakType: e.target.value})}
-                    >
-                      <option value="Arak">Arak (Salvadora persica)</option>
-                      <option value="Neem">Neem (Azadirachta indica)</option>
-                      <option value="Olive">Olive (Zaitoon / Olea europaea)</option>
-                      <option value="Walnut">Walnut (Juglans regia)</option>
-                      <option value="Other">Other Sources (Kikar, Citrus)</option>
-                    </select>
-                    <div className="absolute right-4 md:right-5 top-1/2 -translate-y-1/2 pointer-events-none text-primary/40">
-                      <i className="fa-solid fa-chevron-down text-xs"></i>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-[10px] font-bold text-primary/50 uppercase tracking-widest mb-1.5 ml-1">Quantity</label>
-                  <div className="relative">
-                    <select 
-                      className="w-full px-4 md:px-5 py-3 md:py-3.5 rounded-xl md:rounded-2xl bg-[#F9F7F2] border border-primary/10 text-primary focus:bg-white focus:ring-4 focus:ring-cta/10 focus:border-cta outline-none transition-all duration-200 appearance-none cursor-pointer text-sm md:text-base"
-                      value={formData.quantity}
-                      onChange={(e) => setFormData({...formData, quantity: e.target.value})}
-                    >
-                      <option value="1">1 Pack (Single)</option>
-                      <option value="4">4 Pack (Family - Save 20%)</option>
-                      <option value="20">20 Pack (Wholesale)</option>
-                    </select>
-                    <div className="absolute right-4 md:right-5 top-1/2 -translate-y-1/2 pointer-events-none text-primary/40">
-                      <i className="fa-solid fa-chevron-down text-xs"></i>
-                    </div>
+                <div className="relative">
+                  <select 
+                    className="w-full px-6 py-4 rounded-2xl bg-secondary border border-primary/5 text-primary focus:bg-white outline-none transition-all appearance-none cursor-pointer font-semibold"
+                    value={formData.miswakType}
+                    onChange={(e) => setFormData({...formData, miswakType: e.target.value})}
+                  >
+                    <option value="Arak">Arak (Salvadora persica)</option>
+                    <option value="Neem">Neem Extract Core</option>
+                  </select>
+                  <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-primary/30">
+                    <i className="fa-solid fa-chevron-down text-xs"></i>
                   </div>
                 </div>
                 <button 
                   type="submit" 
-                  className="w-full bg-cta text-white font-bold py-3.5 md:py-4.5 rounded-xl md:rounded-2xl shadow-xl shadow-cta/20 hover:bg-cta/90 hover:-translate-y-0.5 active:translate-y-0 transition-all text-base md:text-lg mt-4"
+                  className="w-full bg-primary text-secondary font-black py-5 rounded-2xl shadow-xl shadow-primary/20 hover:bg-cta hover:shadow-cta/30 hover:-translate-y-1 active:translate-y-0 transition-all duration-300 text-lg uppercase tracking-widest mt-4"
                 >
-                  Buy Now – Cash on Delivery
+                  Order Now
                 </button>
-                <p className="text-[10px] font-bold text-center text-primary/40 mt-4 uppercase tracking-tighter">
-                  <i className="fa-solid fa-award mr-1 text-cta"></i> Satisfaction Guaranteed • Secure Transaction
-                </p>
+                <div className="flex items-center justify-center space-x-2 mt-6">
+                  <i className="fa-solid fa-shield-check text-cta text-sm"></i>
+                  <span className="text-[10px] font-bold text-primary/40 uppercase tracking-widest">Secure SSL Encrypted Checkout</span>
+                </div>
               </form>
+            </div>
+
+            {/* Floating Graphic Element (Desktop) */}
+            <div className="hero-image-box opacity-0 scale-95 hidden xl:block absolute -right-32 top-1/2 -translate-y-1/2 w-[400px] h-[500px] -z-10">
+               <div className="relative w-full h-full">
+                  <div className="absolute inset-0 bg-cta/10 rounded-[4rem] blur-[80px]"></div>
+                  <img 
+                    src="https://images.unsplash.com/photo-1559591937-e43590f0ca1d?auto=format&fit=crop&q=80&w=1200" 
+                    className="relative z-10 w-full h-full object-cover rounded-[4rem] shadow-2xl border-[12px] border-white transform rotate-3 hover:rotate-0 transition-transform duration-700" 
+                    alt="Sunnah Smile Product"
+                  />
+                  {/* Floating Micro-UI */}
+                  <div className="absolute -left-12 bottom-12 z-20 bg-white/90 backdrop-blur-xl p-5 rounded-3xl shadow-2xl border border-primary/5 animate-bounce-slow">
+                     <div className="flex items-center space-x-3">
+                        <div className="w-10 h-10 rounded-full bg-cta flex items-center justify-center text-white">
+                           <i className="fa-solid fa-check"></i>
+                        </div>
+                        <div>
+                           <p className="text-[10px] font-bold text-primary/40 uppercase">Quality Grade</p>
+                           <p className="text-sm font-black text-primary">Certified Arak</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Background Decor */}
-      <div className="absolute top-0 right-0 -z-10 w-1/3 h-full bg-primary/5 rounded-l-[100px] hidden lg:block"></div>
-      <div className="absolute bottom-10 left-10 -z-10 w-24 md:w-32 h-24 md:h-32 bg-accent/5 rounded-full blur-3xl"></div>
-      <div className="absolute top-1/4 right-1/4 -z-10 w-48 md:w-64 h-48 md:h-64 bg-cta/5 rounded-full blur-[80px] md:blur-[100px]"></div>
+      
+      <style>{`
+        @keyframes bounce-slow {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-15px); }
+        }
+        .animate-bounce-slow {
+          animation: bounce-slow 4s ease-in-out infinite;
+        }
+      `}</style>
     </section>
   );
 };

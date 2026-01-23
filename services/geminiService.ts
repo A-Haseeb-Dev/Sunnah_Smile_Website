@@ -1,6 +1,7 @@
 
 import { GoogleGenAI } from "@google/genai";
 
+// Standard initialization as per guidelines
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
 
 export const getSunnahAdvice = async (query: string) => {
@@ -19,6 +20,6 @@ export const getSunnahAdvice = async (query: string) => {
     return response.text;
   } catch (error) {
     console.error("Gemini API Error:", error);
-    return "I'm sorry, I'm having trouble connecting right now. Please try again later or consult our FAQ.";
+    return "I'm sorry, I'm having trouble connecting right now. Please check your connection or try again later.";
   }
 };

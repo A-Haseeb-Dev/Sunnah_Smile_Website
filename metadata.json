@@ -1,0 +1,7 @@
+{
+  "name": "Sunnah Smile - Premium Miswak Oral Care",
+  "description": "A modern Sunnah-based oral care solution combining ancient Miswak tradition with scientific hygiene. Revive the Sunnah, protect your smile naturally.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

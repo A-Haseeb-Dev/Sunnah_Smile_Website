@@ -1,10 +1,23 @@
 
 import { GoogleGenAI } from "@google/genai";
 
-// Standard initialization as per guidelines
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+// Robust check for process.env to prevent ReferenceError in local environments
+const getApiKey = () => {
+  try {
+    return process.env.API_KEY || '';
+  } catch (e) {
+    return '';
+  }
+};
+
+const ai = new GoogleGenAI({ apiKey: getApiKey() });
 
 export const getSunnahAdvice = async (query: string) => {
+  const apiKey = getApiKey();
+  if (!apiKey) {
+    return "The assistant is currently offline. Please try again later.";
+  }
+
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
@@ -17,9 +30,9 @@ export const getSunnahAdvice = async (query: string) => {
         temperature: 0.7,
       },
     });
-    return response.text;
+    return response.text || "I couldn't process that. Please ask something else about Miswak.";
   } catch (error) {
     console.error("Gemini API Error:", error);
-    return "I'm sorry, I'm having trouble connecting right now. Please check your connection or try again later.";
+    return "I'm having trouble connecting to my knowledge base right now.";
   }
 };

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sunnah Smile Toothbrush – Miswak-Based Natural Oral Care</title>
+    <title>Sunnah Smile – Premium Miswak Oral Care</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -33,9 +33,26 @@
     <style>
       .font-playfair { font-family: 'Playfair Display', serif; }
       html { scroll-behavior: smooth; }
-      /* Initial state for GSAP elements to prevent flash */
-      .gsap-reveal { opacity: 0; transform: translateY(30px); }
+      
+      /* Only apply hidden state if JS is active and GSAP is expected */
+      .js-enabled .gsap-reveal { opacity: 0; transform: translateY(30px); }
+      .js-enabled .hero-badge, 
+      .js-enabled .hero-title, 
+      .js-enabled .hero-description, 
+      .js-enabled .hero-image-box, 
+      .js-enabled .hero-form-container { opacity: 0; }
+      
+      /* Custom Animations */
+      @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+      }
+      .animate-float { animation: float 4s ease-in-out infinite; }
     </style>
+    <script>
+      document.documentElement.classList.add('js-enabled');
+    </script>
 <script type="importmap">
 {
   "imports": {

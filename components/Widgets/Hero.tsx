@@ -1,5 +1,18 @@
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+
+const MISWAK_OPTIONS = [
+  { id: 'Arak', label: 'Arak (Salvadora persica)', desc: 'The traditional Prophetic choice', icon: 'fa-tree' },
+  { id: 'Neem', label: 'Neem (Azadirachta indica)', desc: 'Powerful antibacterial properties', icon: 'fa-shield-virus' },
+  { id: 'Olive', label: 'Olive (Olea europaea)', desc: 'Blessed source mentioned in Quran', icon: 'fa-leaf' },
+  { id: 'Walnut', label: 'Walnut (Dandasa)', desc: 'Rich in tannins for gum health', icon: 'fa-clover' },
+];
+
+const BUNDLE_OPTIONS = [
+  { id: '1', label: 'Single Sunnah Smile', price: '$15.99', desc: 'Perfect for individual use', icon: 'fa-user' },
+  { id: '4', label: 'Family Pack (4 brushes)', price: '$49.99', desc: 'The most popular choice', icon: 'fa-users', badge: 'Best Value' },
+  { id: '20', label: 'Wholesale Bundle', price: '$199.99', desc: 'For communities & retailers', icon: 'fa-boxes-packing' },
+];
 
 const Hero: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -9,10 +22,33 @@ const Hero: React.FC = () => {
     miswakType: 'Arak'
   });
 
+  const [activeDropdown, setActiveDropdown] = useState<'miswak' | 'bundle' | null>(null);
+  
+  const miswakRef = useRef<HTMLDivElement>(null);
+  const bundleRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        (miswakRef.current && !miswakRef.current.contains(event.target as Node)) &&
+        (bundleRef.current && !bundleRef.current.contains(event.target as Node))
+      ) {
+        setActiveDropdown(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`Order received! Thank you ${formData.name}. Our team will contact you shortly.`);
+    alert(`Order received! Thank you ${formData.name}. Your ${formData.miswakType} pack is being prepared.`);
   };
+
+  const selectedMiswak = MISWAK_OPTIONS.find(opt => opt.id === formData.miswakType) || MISWAK_OPTIONS[0];
+  const selectedBundle = BUNDLE_OPTIONS.find(opt => opt.id === formData.quantity) || BUNDLE_OPTIONS[0];
+
+  const inputBaseClass = "w-full px-6 py-4 rounded-2xl border border-primary/5 text-primary placeholder:text-primary/20 focus:bg-white focus:ring-4 focus:ring-accent/5 focus:border-accent hover:border-accent/30 outline-none transition-all duration-500 font-bold bg-secondary shadow-[inset_0_1px_3px_rgba(0,0,0,0.01)]";
 
   return (
     <section className="relative pt-10 pb-20 lg:pt-24 lg:pb-44 bg-secondary overflow-hidden">
@@ -22,7 +58,7 @@ const Hero: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
           
-          {/* Content Left: High-End Typography & Social Proof */}
+          {/* Content Left */}
           <div className="w-full lg:w-3/5 text-center lg:text-left">
             <div className="hero-badge inline-flex items-center space-x-3 bg-white px-5 py-2.5 rounded-full mb-10 shadow-sm border border-primary/5">
               <div className="flex text-cta">
@@ -55,7 +91,6 @@ const Hero: React.FC = () => {
               ))}
             </div>
 
-            {/* Visual Social Proof */}
             <div className="flex items-center justify-center lg:justify-start space-x-8 opacity-40 grayscale pointer-events-none border-t border-primary/5 pt-10">
                <span className="font-playfair font-bold text-xl">MuslimDaily</span>
                <span className="font-bold text-lg">EcoHealth</span>
@@ -73,41 +108,134 @@ const Hero: React.FC = () => {
                 <p className="text-sm text-primary/40 font-bold uppercase tracking-widest">Free Shipping • COD Available</p>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <input 
-                  type="text" 
-                  required
-                  placeholder="Your Full Name"
-                  className="w-full px-6 py-4 rounded-2xl bg-secondary border border-primary/10 text-primary placeholder:text-primary/30 focus:bg-white focus:ring-4 focus:ring-cta/5 focus:border-cta outline-none transition-all font-semibold"
-                  value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
-                />
-                <input 
-                  type="text" 
-                  required
-                  placeholder="Email or WhatsApp"
-                  className="w-full px-6 py-4 rounded-2xl bg-secondary border border-primary/10 text-primary placeholder:text-primary/30 focus:bg-white focus:ring-4 focus:ring-cta/5 focus:border-cta outline-none transition-all font-semibold"
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                />
-                <div className="relative">
-                  <select 
-                    className="w-full px-6 py-4 rounded-2xl bg-secondary border border-primary/10 text-primary focus:bg-white outline-none transition-all appearance-none cursor-pointer font-bold"
-                    value={formData.quantity}
-                    onChange={(e) => setFormData({...formData, quantity: e.target.value})}
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="group">
+                  <label className="block text-[10px] font-black text-primary/40 uppercase tracking-widest mb-2 ml-2 transition-colors group-focus-within:text-cta">Your Identity</label>
+                  <input 
+                    type="text" 
+                    required
+                    placeholder="Your Full Name"
+                    className={inputBaseClass}
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  />
+                </div>
+
+                <div className="group">
+                  <label className="block text-[10px] font-black text-primary/40 uppercase tracking-widest mb-2 ml-2 transition-colors group-focus-within:text-cta">Contact Details</label>
+                  <input 
+                    type="text" 
+                    required
+                    placeholder="Email or WhatsApp"
+                    className={inputBaseClass}
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  />
+                </div>
+                
+                {/* Custom Miswak Type Selection Dropdown */}
+                <div className="relative group" ref={miswakRef}>
+                  <label className="block text-[10px] font-black text-primary/40 uppercase tracking-widest mb-2 ml-2 transition-colors group-focus-within:text-cta">Preferred Miswak Source</label>
+                  <button
+                    type="button"
+                    onClick={() => setActiveDropdown(activeDropdown === 'miswak' ? null : 'miswak')}
+                    className={`w-full px-6 py-4 rounded-2xl border text-left flex justify-between items-center transition-all duration-500 font-bold shadow-[inset_0_1px_3px_rgba(0,0,0,0.01)]
+                      ${activeDropdown === 'miswak' 
+                        ? 'border-accent ring-4 ring-accent/5 bg-white' 
+                        : 'border-primary/5 hover:border-accent/30 bg-secondary'}
+                    `}
                   >
-                    <option value="1">1x Sunnah Smile ($15.99)</option>
-                    <option value="4">4x Family Pack ($49.99)</option>
-                    <option value="20">20x Wholesale ($199.99)</option>
-                  </select>
-                  <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-primary/30">
-                    <i className="fa-solid fa-chevron-down text-xs"></i>
-                  </div>
+                    <div className="flex items-center space-x-3">
+                      <i className={`fa-solid ${selectedMiswak.icon} text-accent/50 text-sm`}></i>
+                      <span className="text-primary">{selectedMiswak.label}</span>
+                    </div>
+                    <i className={`fa-solid fa-chevron-down text-xs text-primary/20 transition-transform duration-300 ${activeDropdown === 'miswak' ? 'rotate-180 text-accent' : ''}`}></i>
+                  </button>
+
+                  {activeDropdown === 'miswak' && (
+                    <div className="absolute left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-primary/5 z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                      <div className="p-2 max-h-72 overflow-y-auto custom-scrollbar">
+                        {MISWAK_OPTIONS.map((option) => (
+                          <button
+                            key={option.id}
+                            type="button"
+                            onClick={() => {
+                              setFormData({ ...formData, miswakType: option.id });
+                              setActiveDropdown(null);
+                            }}
+                            className="w-full text-left px-4 py-3 rounded-xl transition-all duration-200 group hover:bg-accent/5 flex items-center space-x-4"
+                          >
+                            <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center text-accent/40 group-hover:bg-accent group-hover:text-white transition-all">
+                              <i className={`fa-solid ${option.icon}`}></i>
+                            </div>
+                            <div>
+                              <div className="font-bold text-sm text-primary group-hover:text-accent transition-colors">{option.label}</div>
+                              <div className="text-[10px] text-primary/40 font-bold">{option.desc}</div>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Custom Bundle Selection Dropdown */}
+                <div className="relative group" ref={bundleRef}>
+                  <label className="block text-[10px] font-black text-primary/40 uppercase tracking-widest mb-2 ml-2 transition-colors group-focus-within:text-cta">Select Bundle</label>
+                  <button
+                    type="button"
+                    onClick={() => setActiveDropdown(activeDropdown === 'bundle' ? null : 'bundle')}
+                    className={`w-full px-6 py-4 rounded-2xl border text-left flex justify-between items-center transition-all duration-500 font-bold shadow-[inset_0_1px_3px_rgba(0,0,0,0.01)]
+                      ${activeDropdown === 'bundle' 
+                        ? 'border-accent ring-4 ring-accent/5 bg-white' 
+                        : 'border-primary/5 hover:border-accent/30 bg-secondary'}
+                    `}
+                  >
+                    <div className="flex items-center space-x-3">
+                      <i className={`fa-solid ${selectedBundle.icon} text-cta/50 text-sm`}></i>
+                      <span className="text-primary">{selectedBundle.label} — {selectedBundle.price}</span>
+                    </div>
+                    <i className={`fa-solid fa-chevron-down text-xs text-primary/20 transition-transform duration-300 ${activeDropdown === 'bundle' ? 'rotate-180 text-accent' : ''}`}></i>
+                  </button>
+
+                  {activeDropdown === 'bundle' && (
+                    <div className="absolute left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-primary/5 z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                      <div className="p-2">
+                        {BUNDLE_OPTIONS.map((option) => (
+                          <button
+                            key={option.id}
+                            type="button"
+                            onClick={() => {
+                              setFormData({ ...formData, quantity: option.id });
+                              setActiveDropdown(null);
+                            }}
+                            className="w-full text-left px-4 py-4 rounded-xl transition-all duration-200 group hover:bg-cta/5 flex items-center justify-between"
+                          >
+                            <div className="flex items-center space-x-4">
+                              <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center text-cta/40 group-hover:bg-cta group-hover:text-white transition-all">
+                                <i className={`fa-solid ${option.icon}`}></i>
+                              </div>
+                              <div>
+                                <div className="font-bold text-sm text-primary group-hover:text-cta transition-colors">
+                                  {option.label}
+                                  {option.badge && (
+                                    <span className="ml-2 px-2 py-0.5 bg-cta/10 text-cta text-[8px] uppercase tracking-widest rounded-full">{option.badge}</span>
+                                  )}
+                                </div>
+                                <div className="text-[10px] text-primary/40 font-bold">{option.desc}</div>
+                              </div>
+                            </div>
+                            <div className="font-black text-sm text-primary/60">{option.price}</div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
                 
                 <button 
                   type="submit" 
-                  className="w-full bg-primary text-secondary font-black py-5 rounded-2xl shadow-xl shadow-primary/20 hover:bg-cta hover:shadow-cta/30 hover:-translate-y-1 active:translate-y-0 transition-all text-base uppercase tracking-widest mt-4"
+                  className="w-full bg-primary text-secondary font-black py-5 rounded-2xl shadow-xl shadow-primary/20 hover:bg-cta hover:shadow-cta/30 hover:-translate-y-1 active:translate-y-0 transition-all text-base uppercase tracking-widest mt-2"
                 >
                   Order Now
                 </button>

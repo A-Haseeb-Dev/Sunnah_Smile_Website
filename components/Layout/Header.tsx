@@ -136,8 +136,8 @@ const Header: React.FC<HeaderProps> = ({ cartCount, onOpenCart }) => {
             </button>
           </div>
 
-          {/* Links */}
-          <nav ref={linksRef} className="flex-1 overflow-y-auto px-6 py-8 space-y-4">
+          {/* Links with improved custom scrollbar */}
+          <nav ref={linksRef} className="flex-1 overflow-y-auto px-6 py-8 space-y-4 custom-scrollbar">
             {[
               { label: 'Shop All', href: '#shop', icon: 'fa-bag-shopping' },
               { label: 'Sunnah Benefits', href: '#benefits', icon: 'fa-heart-pulse' },

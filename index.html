@@ -23,7 +23,7 @@
         }
       }
     </script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
@@ -34,21 +34,74 @@
       .font-playfair { font-family: 'Playfair Display', serif; }
       html { scroll-behavior: smooth; }
       
-      /* Only apply hidden state if JS is active and GSAP is expected */
-      .js-enabled .gsap-reveal { opacity: 0; transform: translateY(30px); }
+      /* --- PREMIUM GLOBAL SCROLLBAR --- */
+      ::-webkit-scrollbar { width: 10px; height: 10px; }
+      ::-webkit-scrollbar-track { background: #FDFBF7; }
+      ::-webkit-scrollbar-thumb { 
+        background: rgba(6, 78, 59, 0.2); 
+        border-radius: 20px; 
+        border: 3px solid #FDFBF7; 
+        transition: all 0.3s ease;
+      }
+      ::-webkit-scrollbar-thumb:hover { background: rgba(5, 150, 105, 0.6); }
+
+      .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+      .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(6, 78, 59, 0.15); border-radius: 10px; }
+
+      /* Animation Base State */
+      .js-enabled .gsap-reveal,
       .js-enabled .hero-badge, 
       .js-enabled .hero-title, 
       .js-enabled .hero-description, 
       .js-enabled .hero-image-box, 
-      .js-enabled .hero-form-container { opacity: 0; }
-      
-      /* Custom Animations */
-      @keyframes float {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-        100% { transform: translateY(0px); }
+      .js-enabled .hero-form-container,
+      .js-enabled .hero-feature-tag { 
+        opacity: 0;
+        visibility: hidden;
       }
-      .animate-float { animation: float 4s ease-in-out infinite; }
+
+      /* Premium Animations */
+      @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(-6deg); }
+        50% { transform: translateY(-20px) rotate(-4deg); }
+      }
+      .animate-float { animation: float 6s ease-in-out infinite; }
+
+      @keyframes shimmer {
+        0% { transform: translateX(-100%) skewX(-15deg); }
+        100% { transform: translateX(200%) skewX(-15deg); }
+      }
+      .shimmer-effect {
+        position: relative;
+        overflow: hidden;
+      }
+      .shimmer-effect::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; width: 50%; height: 100%;
+        background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+        animation: shimmer 3s infinite;
+      }
+
+      @keyframes aura-breath {
+        0%, 100% { box-shadow: 0 0 20px rgba(5, 150, 105, 0.1); }
+        50% { box-shadow: 0 0 40px rgba(5, 150, 105, 0.3); }
+      }
+      .aura-best-seller { animation: aura-breath 4s infinite ease-in-out; }
+
+      .perspective-card {
+        perspective: 1000px;
+      }
+      .perspective-content {
+        transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        transform-style: preserve-3d;
+      }
+      .perspective-card:hover .perspective-content {
+        transform: rotateX(4deg) rotateY(-2deg) translateY(-10px);
+      }
+
+      .bg-spot { filter: blur(80px); opacity: 0.4; }
     </style>
     <script>
       document.documentElement.classList.add('js-enabled');
@@ -63,8 +116,10 @@
   }
 }
 </script>
+<link rel="stylesheet" href="/index.css">
 </head>
-<body class="bg-secondary text-primary antialiased overflow-x-hidden">
+<body class="bg-secondary text-primary antialiased overflow-x-hidden selection:bg-cta selection:text-white">
     <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
 </body>
 </html>

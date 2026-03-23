@@ -28,14 +28,14 @@ const HowItWorks: React.FC = () => {
   return (
     <section className="py-20 bg-secondary" id="how-it-works">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 gsap-reveal opacity-0 transform translate-y-10">
+        <div className="text-center mb-16 gsap-reveal">
           <h2 className="text-4xl font-playfair font-bold text-primary mb-4">Simple to Use</h2>
           <p className="text-lg text-primary/60">Integrating tradition into your modern morning routine.</p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((step, idx) => (
-            <div key={idx} className="relative group gsap-reveal opacity-0 transform translate-y-12">
+            <div key={idx} className="relative group gsap-reveal">
               {idx < steps.length - 1 && (
                 <div className="hidden lg:block absolute top-12 left-full w-full h-[2px] bg-primary/5 -z-10"></div>
               )}

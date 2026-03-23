@@ -3,7 +3,7 @@ import React from 'react';
 
 const ProblemSolution: React.FC = () => {
   return (
-    <section className="py-20 bg-white gsap-reveal opacity-0 transform translate-y-10" id="benefits">
+    <section className="py-20 bg-white gsap-reveal" id="benefits">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-playfair font-bold text-primary mb-4">Why Switch to Sunnah Smile?</h2>
